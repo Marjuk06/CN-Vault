@@ -3,9 +3,7 @@ import type { VaultEntry } from '@/lib/schema';
 import { invoke } from '@tauri-apps/api/core';
 import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 
-// ─────────────────────────────────────────────────────────
 // Types
-// ─────────────────────────────────────────────────────────
 
 export type VaultStatus = 'uninitialized' | 'locked' | 'unlocked';
 
@@ -80,9 +78,7 @@ interface VaultState {
   finishTour: () => Promise<void>;
 }
 
-// ─────────────────────────────────────────────────────────
 // Store
-// ─────────────────────────────────────────────────────────
 
 let clipboardTimerRef: ReturnType<typeof setInterval> | null = null;
 
@@ -103,7 +99,7 @@ export const useVaultStore = create<VaultState>((set, get) => ({
   isNetworkActive: false,
   runTour: false,
 
-  // ── Derived ────────────────────────────────────────────
+  // Derived
 
   getFilteredEntries: () => {
     const { entries, activeCategory, searchQuery } = get();
@@ -137,7 +133,7 @@ export const useVaultStore = create<VaultState>((set, get) => ({
     return entries.find((e) => e.id === selectedEntryId) ?? null;
   },
 
-  // ── Vault Lifecycle ─────────────────────────────────────
+  // Vault Lifecycle
 
   fetchStatus: async () => {
     try {
@@ -225,7 +221,7 @@ export const useVaultStore = create<VaultState>((set, get) => ({
     });
   },
 
-  // ── Entry CRUD ──────────────────────────────────────────
+  // Entry CRUD
 
   addEntry: async (entry) => {
     await invoke('save_entry', { entry });
@@ -255,7 +251,7 @@ export const useVaultStore = create<VaultState>((set, get) => ({
     if (entry) get().addToast(`"${entry.title}" deleted`, 'info');
   },
 
-  // ── Selection & Navigation ───────────────────────────────
+  // Selection & Navigation
 
   setSelectedEntryId: (id) => set({ selectedEntryId: id }),
 
@@ -266,7 +262,7 @@ export const useVaultStore = create<VaultState>((set, get) => ({
 
   setNetworkActive: (active) => set({ isNetworkActive: active }),
 
-  // ── Clipboard ───────────────────────────────────────────
+  // Clipboard
 
   copyToClipboard: async (value) => {
     try {
@@ -305,7 +301,7 @@ export const useVaultStore = create<VaultState>((set, get) => ({
     }, 1000);
   },
 
-  // ── Toast ────────────────────────────────────────────────
+  // Toast
 
   addToast: (message, type = 'info') => {
     const id = crypto.randomUUID();
@@ -321,7 +317,7 @@ export const useVaultStore = create<VaultState>((set, get) => ({
   removeToast: (id) =>
     set((state) => ({ toasts: state.toasts.filter((t) => t.id !== id) })),
 
-  // ── Settings ─────────────────────────────────────────────
+  // Settings
 
   saveSetting: async (key, value) => {
     await invoke('save_setting', { key, value });

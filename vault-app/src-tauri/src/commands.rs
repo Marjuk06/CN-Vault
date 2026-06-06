@@ -2,9 +2,7 @@ use crate::{crypto, models, AppState};
 use serde::Serialize;
 use tauri::{Manager, State};
 
-// ─────────────────────────────────────────────────────────
 // DTOs
-// ─────────────────────────────────────────────────────────
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -28,9 +26,7 @@ pub struct UserProfile {
     pub avatar: String, // Base64 encoded string
 }
 
-// ─────────────────────────────────────────────────────────
 // VAULT LIFECYCLE
-// ─────────────────────────────────────────────────────────
 
 /// Returns the current vault initialization and lock state.
 #[tauri::command]
@@ -103,7 +99,7 @@ pub fn init_vault(mut password: String, state: State<AppState>) -> Result<(), St
 /// Includes exponential backoff on repeated failures (Article IV, V-04).
 #[tauri::command]
 pub fn unlock_vault(mut password: String, state: State<AppState>) -> Result<(), String> {
-    // ── Throttle check ──────────────────────────────────────
+    // Throttle check
     {
         let throttle = state.throttle.lock().map_err(|e| e.to_string())?;
         if let Some(remaining) = throttle.remaining_lockout() {
@@ -185,9 +181,7 @@ pub fn lock_vault(state: State<AppState>) -> Result<(), String> {
     Ok(())
 }
 
-// ─────────────────────────────────────────────────────────
 // ENTRY CRUD
-// ─────────────────────────────────────────────────────────
 
 /// Decrypts and returns all vault entries, ordered by most recently updated.
 #[tauri::command]
@@ -275,9 +269,7 @@ pub fn delete_entry(id: String, state: State<AppState>) -> Result<(), String> {
     Ok(())
 }
 
-// ─────────────────────────────────────────────────────────
 // SETTINGS
-// ─────────────────────────────────────────────────────────
 
 /// Returns all user-configurable settings.
 #[tauri::command]
@@ -336,9 +328,7 @@ pub fn save_setting(key: String, value: String, state: State<AppState>) -> Resul
     Ok(())
 }
 
-// ─────────────────────────────────────────────────────────
 // BACKUP SYSTEM
-// ─────────────────────────────────────────────────────────
 
 #[tauri::command]
 pub fn export_vault(destination: String, app: tauri::AppHandle) -> Result<(), String> {

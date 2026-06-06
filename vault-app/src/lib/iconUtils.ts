@@ -10,10 +10,8 @@
  * FORBIDDEN: Google Favicon API, DuckDuckGo API, any third-party icon service.
  */
 
-// ─────────────────────────────────────────────────────────
 // Deterministic color palette
 // Each service name hashes to a consistent hue — same name = same color always.
-// ─────────────────────────────────────────────────────────
 
 const PALETTE: [string, string][] = [
   ['#7c3aed', '#4f46e5'], // violet → indigo
@@ -42,9 +40,7 @@ function hashString(str: string): number {
   return hash % PALETTE.length;
 }
 
-// ─────────────────────────────────────────────────────────
 // Domain extraction
-// ─────────────────────────────────────────────────────────
 
 /**
  * Extracts a normalised display name from a URL or free-text title.
@@ -64,9 +60,7 @@ export function extractDomain(input: string): string {
   }
 }
 
-// ─────────────────────────────────────────────────────────
 // SVG fallback icon generator
-// ─────────────────────────────────────────────────────────
 
 /**
  * Generates an SVG data URL for a given service name.

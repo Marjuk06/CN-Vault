@@ -25,9 +25,7 @@ import { cn } from '@/lib/utils';
 
 import type { VaultEntry } from '@/lib/schema';
 
-// ─────────────────────────────────────────────────────────
 // Modal state
-// ─────────────────────────────────────────────────────────
 
 type ModalState =
   | { type: 'none' }
@@ -37,9 +35,7 @@ type ModalState =
   | { type: 'settings' }
   | { type: 'generator' };
 
-// ─────────────────────────────────────────────────────────
 // App
-// ─────────────────────────────────────────────────────────
 
 function App() {
   const { status, fetchStatus, fetchEntries, fetchSettings, fetchUserProfile, deleteEntry, getSelectedEntry } =
@@ -51,10 +47,10 @@ function App() {
   const [modal, setModal] = useState<ModalState>({ type: 'none' });
   const [shake, setShake] = useState(false);
 
-  // ── Auto Lock Hook ──────────────────────────────────────
+  // Auto Lock Hook
   useAutoLock();
 
-  // ── Initialisation ──────────────────────────────────────
+  // Initialisation
   useEffect(() => {
     const init = async () => {
       await fetchStatus();
@@ -71,7 +67,7 @@ function App() {
     }
   }, [status, fetchEntries, fetchSettings, fetchUserProfile]);
 
-  // ── Auth flow ───────────────────────────────────────────
+  // Auth flow
   const handleAuth = async () => {
     if (!password.trim()) return;
     setError('');
@@ -90,7 +86,7 @@ function App() {
     }
   };
 
-  // ── Modal helpers ───────────────────────────────────────
+  // Modal helpers
   const openEdit = () => {
     const entry = getSelectedEntry();
     if (entry) setModal({ type: 'edit', entry });
@@ -107,7 +103,7 @@ function App() {
     setModal({ type: 'none' });
   };
 
-  // ── Loading splash ──────────────────────────────────────
+  // Loading splash
   if (isLoading) {
     return (
       <div className="h-screen w-screen flex items-center justify-center bg-[#060609]">
@@ -116,7 +112,7 @@ function App() {
     );
   }
 
-  // ── Unlock / Init screen ─────────────────────────────────
+  // Unlock / Init screen
   if (status === 'uninitialized') {
     return <SetupWizard onComplete={fetchStatus} />;
   }
@@ -171,7 +167,7 @@ function App() {
     );
   }
 
-  // ── Main application ─────────────────────────────────────
+  // Main application
   return (
     <ErrorBoundary>
       {/* App Tour */}
