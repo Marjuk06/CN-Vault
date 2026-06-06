@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="vault-app/src-tauri/icons/128x128.png" alt="CN Vault Logo" width="128" style="filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.6));" />
+  <img src="vault-app/src/assets/logoo.png" alt="CN Vault Logo" width="128" />
   <h1 style="color: #c084fc;">CN Vault</h1>
   <p><strong>A local-first, secure password manager.</strong></p>
   

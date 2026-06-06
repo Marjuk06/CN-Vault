@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useVaultStore } from '@/store/vaultStore';
 import { invoke } from '@tauri-apps/api/core';
 import { ShieldAlert, Loader2 } from 'lucide-react';
+import logoUrl from '@/assets/logoo.png';
 
 // Layout
 import Layout from '@/components/layout/Layout';
@@ -127,8 +128,8 @@ function App() {
         <div className={cn("glass-bright rounded-3xl p-10 w-full max-w-sm relative z-10 anim-scale-in shadow-[0_32px_80px_rgba(0,0,0,0.7),0_0_60px_rgba(124,58,237,0.12)]", shake && "anim-shake")}>
           {/* Icon + Title */}
           <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 rounded-[18px] bg-gradient-to-br from-violet-600 to-cyan-500 flex items-center justify-center shadow-[0_0_40px_rgba(124,58,237,0.5)] mb-4">
-              <ShieldAlert className="w-8 h-8 text-white" />
+            <div className="w-20 h-20 rounded-2xl bg-[#120D26] border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex items-center justify-center mb-3 overflow-hidden backdrop-blur-md">
+              <img src={logoUrl} alt="CN Vault Logo" className="w-full h-full object-contain scale-[1.0] transition-transform" />
             </div>
             <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-br from-white to-violet-300 bg-clip-text text-transparent">
               CN Vault
@@ -142,11 +143,11 @@ function App() {
           <div className="mb-3">
             <input
               type="password"
-              placeholder="Master password"
+              placeholder="ENTER MASTER PASSWORD"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') handleAuth(); }}
-              className="input-glass w-full rounded-xl py-3 px-4 text-sm"
+              className="input-glass w-full rounded-xl py-3.5 px-4 text-center tracking-[0.2em] font-medium text-white placeholder:text-white/20 placeholder:tracking-widest placeholder:text-xs placeholder:font-bold transition-all focus:ring-2 focus:ring-violet-500/50"
               autoFocus
             />
             {error && (

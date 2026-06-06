@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { NetworkStatusPill } from './NetworkStatusPill';
 
 import { Settings, Wand2 } from 'lucide-react';
+import logoUrl from '@/assets/logoo.png';
 
 interface SidebarProps {
   onOpenSettings: () => void;
@@ -37,8 +38,8 @@ export default function Sidebar({ onOpenSettings, onOpenGenerator }: SidebarProp
     <div className="hidden md:flex glass flex-shrink-0 flex-col z-10 w-[210px] h-screen border-r border-white/[0.05] p-4 pb-3">
       {/* Logo */}
       <div className="flex items-center gap-3 px-2 mb-6">
-        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center shadow-[0_0_16px_rgba(124,58,237,0.4)]">
-          <Shield className="w-3.5 h-3.5 text-white" />
+        <div className="w-8 h-8 rounded-[10px] bg-[#120D26] border border-white/[0.08] shadow-sm flex items-center justify-center overflow-hidden backdrop-blur-md">
+          <img src={logoUrl} alt="CN Vault Logo" className="w-full h-full object-contain scale-[0.9] transition-transform" />
         </div>
         <span className="font-bold text-sm tracking-tight text-white">CN Vault</span>
       </div>
@@ -125,7 +126,7 @@ export default function Sidebar({ onOpenSettings, onOpenGenerator }: SidebarProp
         <div className="flex justify-center">
           <NetworkStatusPill />
         </div>
-        <div 
+        <div
           className="flex items-center gap-2 px-1.5 py-1.5 cursor-pointer hover:bg-white/[0.05] rounded-xl transition-colors -mx-0.5"
           onClick={onOpenSettings}
         >
