@@ -3,6 +3,7 @@ import { KeyRound, ArrowRight, UserRound, Upload as UploadIcon, Settings as Sett
 import { invoke } from '@tauri-apps/api/core';
 import { useVaultStore } from '@/store/vaultStore';
 import ImageCropperModal from '@/components/ui/ImageCropperModal';
+import logoUrl from '@/assets/logoo.png';
 
 interface SetupWizardProps {
   onComplete: () => void;
@@ -99,8 +100,8 @@ export default function SetupWizard({ onComplete }: SetupWizardProps) {
         {/* Step 1: Profile Setup */}
         {step === 1 && (
           <div className="flex flex-col items-center anim-fade-in">
-            <div className="w-16 h-16 rounded-[18px] bg-gradient-to-br from-violet-600 to-cyan-500 flex items-center justify-center shadow-[0_0_40px_rgba(124,58,237,0.5)] mb-4">
-              <UserRound className="w-8 h-8 text-white" />
+            <div className="w-20 h-20 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center mb-4 overflow-hidden">
+              <img src={logoUrl} alt="CN Vault Logo" className="w-full h-full object-contain" />
             </div>
             <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-br from-white to-violet-300 bg-clip-text text-transparent">
               Welcome to CN Vault
@@ -111,18 +112,24 @@ export default function SetupWizard({ onComplete }: SetupWizardProps) {
             
             <div className="w-full flex flex-col items-center gap-4 mb-4">
               {/* Avatar Selector */}
-              <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                <div className="w-24 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden transition-all group-hover:border-violet-500/50">
-                  {avatar ? (
-                    <img src={avatar} alt="Profile" className="w-full h-full object-cover" />
-                  ) : (
-                    <UserRound className="w-8 h-8 text-white/20" />
-                  )}
+              <div className="flex flex-col items-center gap-2">
+                <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                  <div className="w-24 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden transition-all group-hover:border-violet-500/50">
+                    {avatar ? (
+                      <img src={avatar} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <UserRound className="w-8 h-8 text-white/20" />
+                    )}
+                  </div>
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-full flex flex-col items-center justify-center">
+                    <UploadIcon className="w-5 h-5 text-white mb-1" />
+                    <span className="text-[10px] text-white font-medium">Upload</span>
+                  </div>
+                  <div className="absolute bottom-0 right-0 bg-violet-600 rounded-full p-1.5 shadow-[0_4px_12px_rgba(0,0,0,0.5)] border-2 border-[#120D26] text-white transition-transform group-hover:scale-110">
+                    <UploadIcon className="w-3.5 h-3.5" />
+                  </div>
                 </div>
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-full flex flex-col items-center justify-center">
-                  <UploadIcon className="w-5 h-5 text-white mb-1" />
-                  <span className="text-[10px] text-white font-medium">Upload</span>
-                </div>
+                <span className="text-[10px] text-white/40 font-medium uppercase tracking-wider">Profile Picture (Optional)</span>
               </div>
               <input type="file" ref={fileInputRef} accept="image/*" className="hidden" onChange={handleFileChange} />
               

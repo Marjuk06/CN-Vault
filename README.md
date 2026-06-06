@@ -13,21 +13,6 @@
 
 ---
 
-## 🎥 App Demo
-
-<div align="center">
-  <!-- 
-    To upload your own video: 
-    1. Drag and drop your MP4/GIF file into any GitHub Issue comment box.
-    2. Wait for it to upload and copy the generated link.
-    3. Paste that link into the 'src' attribute below!
-  -->
-  <video src="https://www.w3schools.com/html/mov_bbb.mp4" width="800" autoplay loop muted playsinline></video>
-  <p><i>(Placeholder video. Replace the <code>src</code> above with your own demo!)</i></p>
-</div>
-
----
-
 ## Screenshots
 
 | Unlock Screen | Dashboard |

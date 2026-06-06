@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useVaultStore } from '@/store/vaultStore';
 import { invoke } from '@tauri-apps/api/core';
-import { ShieldAlert, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import logoUrl from '@/assets/logoo.png';
 
 // Layout
@@ -115,7 +115,14 @@ function App() {
 
   // Unlock / Init screen
   if (status === 'uninitialized') {
-    return <SetupWizard onComplete={fetchStatus} />;
+    return (
+      <div className="h-screen w-screen overflow-hidden bg-[#060609] text-slate-200 font-sans flex items-center justify-center relative">
+        {/* Ambient glows */}
+        <div className="glow-blob w-[600px] h-[600px] bg-violet-600/15 top-[-150px] left-[-150px]" />
+        <div className="glow-blob w-[500px] h-[500px] bg-blue-500/10 bottom-[-100px] right-[-100px]" />
+        <SetupWizard onComplete={fetchStatus} />
+      </div>
+    );
   }
 
   if (status === 'locked') {
