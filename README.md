@@ -252,7 +252,7 @@ We welcome contributions from the community!
 Security is our absolute highest priority. 
 
 If you discover a vulnerability, **DO NOT** open a public issue. 
-Please report it securely via email to `security@cnvault.example.com`. We practice Responsible Disclosure and will address the issue immediately.
+Please report it securely via email to `marjukamin06@gmail.com`. We practice Responsible Disclosure and will address the issue immediately.
 
 ---
 
