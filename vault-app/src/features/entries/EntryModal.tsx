@@ -240,7 +240,13 @@ export default function EntryModal({ entry, onClose }: EntryModalProps) {
               id="tour-entry-fields"
               ref={titleRef}
               type="text"
-              placeholder="e.g. GitHub"
+              placeholder={
+                form.category === 'Email' ? 'e.g. Personal Gmail' :
+                form.category === 'API Keys' ? 'e.g. OpenAI Key' :
+                form.category === 'Notes' ? 'e.g. Wi-Fi Password' :
+                form.category === 'Recovery' ? 'e.g. Google Backup Codes' :
+                'e.g. GitHub'
+              }
               value={form.title}
               onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
               className={inputClass(!!errors.title)}
@@ -314,7 +320,7 @@ export default function EntryModal({ entry, onClose }: EntryModalProps) {
           )}
 
           {/* URL */}
-          {form.category !== 'Notes' && form.category !== 'Recovery' && (
+          {form.category !== 'Notes' && form.category !== 'Recovery' && form.category !== 'Email' && (
             <Field label="URL" error={errors.url}>
               <div className="relative">
                 {form.icon ? (

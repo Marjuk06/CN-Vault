@@ -205,6 +205,9 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
                     <UploadIcon className="w-5 h-5 text-white mb-1" />
                     <span className="text-[10px] text-white font-medium">Change</span>
                   </div>
+                  <div className="absolute bottom-0 right-0 bg-violet-600 rounded-full p-1.5 shadow-[0_4px_12px_rgba(0,0,0,0.5)] border-2 border-[#120D26] text-white transition-transform group-hover:scale-110">
+                    <UploadIcon className="w-3.5 h-3.5" />
+                  </div>
                 </div>
                 <input type="file" ref={fileInputRef} accept="image/*" className="hidden" onChange={handleFileChange} />
                 
@@ -223,7 +226,7 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
               <button
                 onClick={handleSaveProfile}
                 disabled={isSavingProfile}
-                className="btn-primary self-end rounded-xl px-5 py-2 text-xs font-semibold disabled:opacity-50 mt-2"
+                className="btn-primary w-full rounded-xl py-2.5 text-sm font-semibold disabled:opacity-50 mt-2 transition-all"
               >
                 {isSavingProfile ? 'Saving…' : 'Save Profile'}
               </button>
@@ -292,7 +295,7 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
                 <button
                   onClick={handleSaveSettings}
                   disabled={isSaving}
-                  className="btn-primary self-end rounded-xl px-5 py-2 text-xs font-semibold disabled:opacity-50"
+                  className="btn-primary w-full rounded-xl py-2.5 text-sm font-semibold disabled:opacity-50 transition-all"
                 >
                   {isSaving ? 'Saving…' : 'Save General Settings'}
                 </button>
@@ -340,7 +343,7 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
                   <button
                     onClick={handleChangePassword}
                     disabled={isChangingPwd}
-                    className="bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 self-end rounded-xl px-5 py-2 text-xs font-semibold transition-all disabled:opacity-50"
+                    className="bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 w-full rounded-xl py-2.5 text-sm font-semibold transition-all disabled:opacity-50"
                   >
                     {isChangingPwd ? 'Re-encrypting CN Vault...' : 'Change Password'}
                   </button>
