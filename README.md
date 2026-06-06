@@ -32,11 +32,20 @@
 
 | Unlock Screen | Dashboard |
 | :---: | :---: |
-| <img src="https://placehold.co/600x350/0f172a/06b6d4.png?text=Unlock+Screen" width="400" /> | <img src="https://placehold.co/600x350/0f172a/8b5cf6.png?text=Dashboard" width="400" /> |
+| <img src="vault-app/src/sss/locscreen.png" width="400" /> | <img src="vault-app/src/sss/dashboard.png" width="400" /> |
 
-| Password Generator | Settings & Tour |
+| Add New Entry | Password Generator |
 | :---: | :---: |
-| <img src="https://placehold.co/600x350/0f172a/06b6d4.png?text=Password+Generator" width="400" /> | <img src="https://placehold.co/600x350/0f172a/8b5cf6.png?text=Settings" width="400" /> |
+| <img src="vault-app/src/sss/newentry.png" width="400" /> | <img src="vault-app/src/sss/passgenertor.png" width="400" /> |
+
+| Settings (Profile) | Settings (Security) |
+| :---: | :---: |
+| <img src="vault-app/src/sss/settings_profile.png" width="400" /> | <img src="vault-app/src/sss/settings_security.png" width="400" /> |
+
+<div align="center">
+  <b>Settings (Backup & Restore)</b><br>
+  <img src="vault-app/src/sss/settings_backup.png" width="400" />
+</div>
 
 ---
 
@@ -169,7 +178,7 @@ Requires Node.js (v18+) and Rust (v1.77+).
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/cn-vault.git
+git clone https://github.com/Marjuk06/CN-Vault.git
 cd cn-vault
 
 # Install dependencies

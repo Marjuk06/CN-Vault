@@ -24,11 +24,20 @@
 
 | Unlock Screen | Dashboard |
 | :---: | :---: |
-| ![Unlock Screen Placeholder](https://via.placeholder.com/600x350/1a1a1a/8b5cf6?text=Unlock+Screen) | ![Dashboard Placeholder](https://via.placeholder.com/600x350/1a1a1a/8b5cf6?text=Dashboard) |
+| <img src="src/sss/locscreen.png" width="400" /> | <img src="src/sss/dashboard.png" width="400" /> |
 
-| Password Generator | Settings & App Tour |
+| Add New Entry | Password Generator |
 | :---: | :---: |
-| ![Password Generator Placeholder](https://via.placeholder.com/600x350/1a1a1a/8b5cf6?text=Password+Generator) | ![Settings Placeholder](https://via.placeholder.com/600x350/1a1a1a/8b5cf6?text=Settings+%26+App+Tour) |
+| <img src="src/sss/newentry.png" width="400" /> | <img src="src/sss/passgenertor.png" width="400" /> |
+
+| Settings (Profile) | Settings (Security) |
+| :---: | :---: |
+| <img src="src/sss/settings_profile.png" width="400" /> | <img src="src/sss/settings_security.png" width="400" /> |
+
+<div align="center">
+  <b>Settings (Backup & Restore)</b><br>
+  <img src="src/sss/settings_backup.png" width="400" />
+</div>
 
 ---
 
@@ -195,7 +204,7 @@ When you save a login URL, CN Vault attempts to fetch the website's favicon.
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/cn-vault.git
+git clone https://github.com/Marjuk06/CN-Vault.git
 cd cn-vault/vault-app
 
 # Install frontend dependencies
