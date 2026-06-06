@@ -194,7 +194,7 @@ When you save a login URL, CN Vault attempts to fetch the website's favicon.
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/cn-vault.git
+git clone https://github.com/marjuk06/cn-vault.git
 cd cn-vault
 
 # Install frontend dependencies
