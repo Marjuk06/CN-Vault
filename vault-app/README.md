@@ -79,13 +79,13 @@ graph TD
     UI --> |State Management| App[Application Layer - Zustand]
     App --> |Tauri IPC| Tauri[Tauri Backend - Rust]
     
-    subgraph Security Layer
+    subgraph SecurityLayer [Security Layer]
         Tauri --> |Argon2id| Key[Key Derivation]
         Tauri --> |AES-256-GCM| Enc[Encryption Engine]
         Tauri --> |Zeroize| RAM[Memory Protection]
     end
     
-    Security Layer --> |Encrypted Blob| DB[(SQLite Database)]
+    SecurityLayer --> |Encrypted Blob| DB[(SQLite Database)]
 ```
 
 ---

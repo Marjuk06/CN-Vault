@@ -81,13 +81,13 @@ graph TD
     UI --> App[State Management - Zustand]
     App --> Tauri[Tauri Backend - Rust]
     
-    subgraph Security Layer
+    subgraph SecurityLayer [Security Layer]
         Tauri --> Key[Argon2id Key Derivation]
         Tauri --> Enc[AES-256-GCM]
         Tauri --> RAM[Memory Protection]
     end
     
-    Security Layer --> DB[(SQLite Database)]
+    SecurityLayer --> DB[(SQLite Database)]
 ```
 
 ---
