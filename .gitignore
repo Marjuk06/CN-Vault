@@ -1,0 +1,9 @@
+
+# Binary Releases
+*.exe
+*.msi
+*.msix
+*.snap
+*.pfx
+*.cer
+MSIX_Staging/
