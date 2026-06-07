@@ -14,9 +14,9 @@
 
 ---
 
-## 🎥 App Demo & Installation
+## App Demo & Installation
 
-**📺 [Watch the Full Demo Video on YouTube!](https://youtu.be/oziHNamB4o8)**
+**[Watch the Full Demo Video on YouTube!](https://youtu.be/oziHNamB4o8)**
 
 ### Linux
 The easiest way to install on any Linux distribution is via the Snap Store:
