@@ -1,0 +1,35 @@
+name: cn-vault
+base: core22
+version: '0.1.0'
+title: 'CN Vault'
+contact: 'marjukamin06@gmail.com'
+license: 'MIT'
+icon: vault-app/src-tauri/icons/128x128.png
+summary: CN Vault Password Manager
+description: |
+  A highly secure, offline-first, native password manager built with Rust, Tauri, and React.
+grade: stable
+confinement: strict
+
+layout:
+  /usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.1:
+    bind: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.1
+
+apps:
+  cn-vault:
+    command: usr/bin/app
+    desktop: usr/share/applications/CN Vault.desktop
+    extensions: [gnome]
+    plugs:
+      - desktop
+      - desktop-legacy
+      - home
+      - network
+      - wayland
+      - x11
+
+parts:
+  cn-vault-bin:
+    plugin: dump
+    source: vault-app/src-tauri/target/release/bundle/deb/CN Vault_0.1.0_amd64.deb
+    source-type: deb

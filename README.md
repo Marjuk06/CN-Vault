@@ -4,12 +4,32 @@
   <p><strong>A local-first, secure password manager.</strong></p>
   
   <p>
+    <a href="https://snapcraft.io/cn-vault"><img src="https://img.shields.io/badge/Snap_Store-Available-E95420?style=flat-square&logo=snapcraft&logoColor=white" alt="Snap Store"></a>
     <img src="https://img.shields.io/badge/Status-Production-8b5cf6?style=flat-square" alt="Status" />
     <img src="https://img.shields.io/badge/Version-1.0.0-06b6d4?style=flat-square" alt="Version" />
-    <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-312e81?style=flat-square" alt="Platforms" />
+    <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-312e81?style=flat-square" alt="Platforms" />
     <img src="https://img.shields.io/badge/License-MIT-06b6d4?style=flat-square" alt="License" />
   </p>
 </div>
+
+---
+
+## 🎥 App Demo & Installation
+
+**📺 [Watch the Full Demo Video on YouTube!](https://youtu.be/oziHNamB4o8)**
+
+### Linux
+The easiest way to install on any Linux distribution is via the Snap Store:
+```bash
+sudo snap install cn-vault
+```
+*(Flatpak installation via Flathub is currently pending review).*
+
+### Windows
+Download the automated `.msix` installer from the **Releases** page on GitHub.
+
+### macOS
+*⚠️ macOS is currently not supported. We plan to add support in a future update.*
 
 ---
 
