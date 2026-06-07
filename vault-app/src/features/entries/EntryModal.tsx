@@ -22,7 +22,6 @@ const CATEGORY_LABELS: Record<Category, string> = {
 };
 
 interface EntryModalProps {
-  /** null = Add mode, VaultEntry = Edit mode */
   entry?: VaultEntry | null;
   onClose: () => void;
 }
@@ -49,7 +48,6 @@ export default function EntryModal({ entry, onClose }: EntryModalProps) {
   const [isFetchingIcon, setIsFetchingIcon] = useState(false);
   const urlDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Close on Escape
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handler);
@@ -88,9 +86,7 @@ export default function EntryModal({ entry, onClose }: EntryModalProps) {
 
   const handleUrlChange = (newUrl: string) => {
     setForm(f => ({ ...f, url: newUrl }));
-    // Clear previous debounce
     if (urlDebounceRef.current) clearTimeout(urlDebounceRef.current);
-    // Only attempt fetch if url looks complete
     if (!newUrl || newUrl.length < 4) return;
     urlDebounceRef.current = setTimeout(async () => {
       if (form.category === 'Notes' || form.category === 'Recovery') return;
@@ -113,7 +109,7 @@ export default function EntryModal({ entry, onClose }: EntryModalProps) {
 
   const handleUsernameChange = (newUsername: string) => {
     setForm(f => ({ ...f, username: newUsername }));
-    if (form.url) return; // Prefer explicit URL
+    if (form.url) return;
     if (!newUsername.includes('@')) return;
     
     const domain = newUsername.split('@').pop();

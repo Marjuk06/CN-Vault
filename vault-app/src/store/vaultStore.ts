@@ -3,7 +3,6 @@ import type { VaultEntry } from '@/lib/schema';
 import { invoke } from '@tauri-apps/api/core';
 import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 
-// Types
 
 export type VaultStatus = 'uninitialized' | 'locked' | 'unlocked';
 
@@ -25,16 +24,13 @@ export interface UserProfile {
 }
 
 interface VaultState {
-  // Status
   status: VaultStatus;
   settings: AppSettings;
   userProfile: UserProfile | null;
 
-  // Entries
   entries: VaultEntry[];
   selectedEntryId: string | null;
 
-  // UI state
   searchQuery: string;
   activeCategory: string;
   toasts: Toast[];
@@ -42,11 +38,9 @@ interface VaultState {
   isNetworkActive: boolean; // true when fetching icons
   runTour: boolean;
 
-  // Derived (computed on access)
   getFilteredEntries: () => VaultEntry[];
   getSelectedEntry: () => VaultEntry | null;
 
-  // Actions — Vault Lifecycle
   fetchStatus: () => Promise<void>;
   fetchEntries: () => Promise<void>;
   fetchSettings: () => Promise<void>;
@@ -54,31 +48,25 @@ interface VaultState {
   updateUserProfile: (profile: UserProfile) => Promise<void>;
   lockVault: () => Promise<void>;
 
-  // Actions — Entry CRUD
   addEntry: (entry: VaultEntry) => Promise<void>;
   updateEntry: (entry: VaultEntry) => Promise<void>;
   deleteEntry: (id: string) => Promise<void>;
 
-  // Actions — Selection & Navigation
   setSelectedEntryId: (id: string | null) => void;
   setSearchQuery: (query: string) => void;
   setActiveCategory: (category: string) => void;
   setNetworkActive: (active: boolean) => void;
 
-  // Actions — Clipboard
   copyToClipboard: (value: string) => Promise<void>;
 
-  // Actions — Toast
   addToast: (message: string, type?: Toast['type']) => void;
   removeToast: (id: string) => void;
 
-  // Actions — Settings
   saveSetting: (key: string, value: string) => Promise<void>;
   startTour: () => void;
   finishTour: () => Promise<void>;
 }
 
-// Store
 
 let clipboardTimerRef: ReturnType<typeof setInterval> | null = null;
 
@@ -112,7 +100,6 @@ export const useVaultStore = create<VaultState>((set, get) => ({
       list = list.filter((e) => e.category === activeCategory);
     }
 
-    // Full-text search across title, username, url, notes
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       list = list.filter(
@@ -132,8 +119,6 @@ export const useVaultStore = create<VaultState>((set, get) => ({
     if (!selectedEntryId) return null;
     return entries.find((e) => e.id === selectedEntryId) ?? null;
   },
-
-  // Vault Lifecycle
 
   fetchStatus: async () => {
     try {
@@ -155,7 +140,6 @@ export const useVaultStore = create<VaultState>((set, get) => ({
     try {
       const entries: VaultEntry[] = await invoke('get_entries');
       set({ entries });
-      // If currently selected entry was deleted, clear selection
       const { selectedEntryId } = get();
       if (selectedEntryId && !entries.find((e) => e.id === selectedEntryId)) {
         set({ selectedEntryId: entries[0]?.id ?? null });
@@ -170,7 +154,6 @@ export const useVaultStore = create<VaultState>((set, get) => ({
       const settings = await invoke<AppSettings>('get_settings');
       set({ 
         settings,
-        // Automatically start the tour if they haven't seen it and are unlocked
         runTour: !settings.hasSeenTour 
       });
     } catch (error) {
@@ -203,12 +186,10 @@ export const useVaultStore = create<VaultState>((set, get) => ({
     } catch (e) {
       console.error('lock_vault error:', e);
     }
-    // Clear clipboard timer
     if (clipboardTimerRef) {
       clearInterval(clipboardTimerRef);
       clipboardTimerRef = null;
     }
-    // Wipe all sensitive client state
     set({
       status: 'locked',
       entries: [],
@@ -220,8 +201,6 @@ export const useVaultStore = create<VaultState>((set, get) => ({
       runTour: false,
     });
   },
-
-  // Entry CRUD
 
   addEntry: async (entry) => {
     await invoke('save_entry', { entry });
@@ -251,8 +230,6 @@ export const useVaultStore = create<VaultState>((set, get) => ({
     if (entry) get().addToast(`"${entry.title}" deleted`, 'info');
   },
 
-  // Selection & Navigation
-
   setSelectedEntryId: (id) => set({ selectedEntryId: id }),
 
   setSearchQuery: (query) => set({ searchQuery: query }),
@@ -261,8 +238,6 @@ export const useVaultStore = create<VaultState>((set, get) => ({
     set({ activeCategory: category, searchQuery: '', selectedEntryId: null }),
 
   setNetworkActive: (active) => set({ isNetworkActive: active }),
-
-  // Clipboard
 
   copyToClipboard: async (value) => {
     try {
@@ -274,7 +249,6 @@ export const useVaultStore = create<VaultState>((set, get) => ({
     const { settings } = get();
     const duration = settings.clipboardClearSeconds;
 
-    // Clear any existing timer
     if (clipboardTimerRef) {
       clearInterval(clipboardTimerRef);
       clipboardTimerRef = null;
@@ -301,14 +275,11 @@ export const useVaultStore = create<VaultState>((set, get) => ({
     }, 1000);
   },
 
-  // Toast
-
   addToast: (message, type = 'info') => {
     const id = crypto.randomUUID();
     set((state) => ({
       toasts: [...state.toasts, { id, message, type }],
     }));
-    // Auto-remove after 3.5 seconds
     setTimeout(() => {
       set((state) => ({ toasts: state.toasts.filter((t) => t.id !== id) }));
     }, 3500);
@@ -316,8 +287,6 @@ export const useVaultStore = create<VaultState>((set, get) => ({
 
   removeToast: (id) =>
     set((state) => ({ toasts: state.toasts.filter((t) => t.id !== id) })),
-
-  // Settings
 
   saveSetting: async (key, value) => {
     await invoke('save_setting', { key, value });

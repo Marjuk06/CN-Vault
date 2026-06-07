@@ -27,7 +27,7 @@ const ACTIVITY_EVENTS = [
   'click',
 ] as const;
 
-const POLL_INTERVAL_MS = 10_000; // check every 10 seconds
+const POLL_INTERVAL_MS = 10_000;
 
 export function useAutoLock() {
   const { status, settings, lockVault } = useVaultStore();
@@ -35,7 +35,6 @@ export function useAutoLock() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    // Only active when vault is unlocked
     if (status !== 'unlocked') {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -46,7 +45,6 @@ export function useAutoLock() {
 
     const timeoutMs = settings.autoLockMinutes * 60 * 1000;
 
-    // Reset activity timestamp on any user interaction
     const resetTimer = () => {
       lastActivityRef.current = Date.now();
     };
@@ -55,7 +53,6 @@ export function useAutoLock() {
       window.addEventListener(event, resetTimer, { passive: true })
     );
 
-    // Poll for idle detection
     intervalRef.current = setInterval(() => {
       const idle = Date.now() - lastActivityRef.current;
       if (idle >= timeoutMs) {

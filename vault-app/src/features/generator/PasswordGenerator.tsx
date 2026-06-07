@@ -51,7 +51,6 @@ export default function PasswordGenerator({ onClose }: PasswordGeneratorProps) {
     generatePassword();
   }, [length, options]);
 
-  // Close on Escape
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handler);
@@ -64,7 +63,6 @@ export default function PasswordGenerator({ onClose }: PasswordGeneratorProps) {
     }
   };
 
-  // Calculate Entropy
   let poolSize = 0;
   if (options.uppercase) poolSize += 26;
   if (options.lowercase) poolSize += 26;

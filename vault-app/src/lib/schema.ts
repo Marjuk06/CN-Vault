@@ -18,8 +18,8 @@ export const VaultEntrySchema = z.object({
   category: z.enum(['Logins', 'Email', 'API Keys', 'Recovery', 'Notes']).default('Logins'),
   isFavorite: z.boolean().default(false),
   customFields: z.array(CustomFieldSchema).default([]),
-  createdAt: z.number(), // Unix timestamp
-  updatedAt: z.number(), // Unix timestamp
+  createdAt: z.number(),
+  updatedAt: z.number(),
 });
 
 export type CustomField = z.infer<typeof CustomFieldSchema>;

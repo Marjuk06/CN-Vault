@@ -2,8 +2,6 @@ use crate::{crypto, models, AppState};
 use serde::Serialize;
 use tauri::{Manager, State};
 
-// DTOs
-
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct VaultStatus {
@@ -26,9 +24,7 @@ pub struct UserProfile {
     pub avatar: String, // Base64 encoded string
 }
 
-// VAULT LIFECYCLE
-
-/// Returns the current vault initialization and lock state.
+/// Returns vault initialization and lock status.
 #[tauri::command]
 pub fn get_vault_status(state: State<AppState>) -> Result<VaultStatus, String> {
     let conn = state.db.lock().map_err(|e| e.to_string())?;
@@ -49,8 +45,7 @@ pub fn get_vault_status(state: State<AppState>) -> Result<VaultStatus, String> {
 
 use zeroize::Zeroize;
 
-/// First-time vault setup. Derives key from master password, stores auth material, activates key.
-/// Returns Err if vault is already initialized.
+/// Initializes the vault.
 #[tauri::command]
 pub fn init_vault(mut password: String, state: State<AppState>) -> Result<(), String> {
     let conn = state.db.lock().map_err(|e| e.to_string())?;
@@ -95,8 +90,7 @@ pub fn init_vault(mut password: String, state: State<AppState>) -> Result<(), St
     Ok(())
 }
 
-/// Unlocks the vault by verifying the master password against the stored verifier.
-/// Includes exponential backoff on repeated failures (Article IV, V-04).
+/// Unlocks the vault.
 #[tauri::command]
 pub fn unlock_vault(mut password: String, state: State<AppState>) -> Result<(), String> {
     // Throttle check
@@ -173,7 +167,7 @@ pub fn unlock_vault(mut password: String, state: State<AppState>) -> Result<(), 
     }
 }
 
-/// Locks the vault. ZeroizeOnDrop on SecretKey wipes key bytes from RAM.
+/// Locks the vault.
 #[tauri::command]
 pub fn lock_vault(state: State<AppState>) -> Result<(), String> {
     let mut key_guard = state.active_key.lock().map_err(|e| e.to_string())?;
@@ -181,9 +175,7 @@ pub fn lock_vault(state: State<AppState>) -> Result<(), String> {
     Ok(())
 }
 
-// ENTRY CRUD
-
-/// Decrypts and returns all vault entries, ordered by most recently updated.
+/// Returns all vault entries.
 #[tauri::command]
 pub fn get_entries(state: State<AppState>) -> Result<Vec<models::VaultEntry>, String> {
     let key_guard = state.active_key.lock().map_err(|e| e.to_string())?;
@@ -226,8 +218,7 @@ pub fn get_entries(state: State<AppState>) -> Result<Vec<models::VaultEntry>, St
     Ok(entries)
 }
 
-/// Encrypts and persists (insert or replace) a single vault entry.
-/// A fresh nonce is generated on every call — nonce reuse is impossible.
+/// Saves a vault entry.
 #[tauri::command]
 pub fn save_entry(entry: models::VaultEntry, state: State<AppState>) -> Result<(), String> {
     let key_guard = state.active_key.lock().map_err(|e| e.to_string())?;
@@ -254,7 +245,7 @@ pub fn save_entry(entry: models::VaultEntry, state: State<AppState>) -> Result<(
     Ok(())
 }
 
-/// Deletes a vault entry by ID. Requires the vault to be unlocked.
+/// Deletes a vault entry.
 #[tauri::command]
 pub fn delete_entry(id: String, state: State<AppState>) -> Result<(), String> {
     let key_guard = state.active_key.lock().map_err(|e| e.to_string())?;
@@ -269,9 +260,7 @@ pub fn delete_entry(id: String, state: State<AppState>) -> Result<(), String> {
     Ok(())
 }
 
-// SETTINGS
-
-/// Returns all user-configurable settings.
+/// Returns app settings.
 #[tauri::command]
 pub fn get_settings(state: State<AppState>) -> Result<AppSettings, String> {
     let conn = state.db.lock().map_err(|e| e.to_string())?;
@@ -310,10 +299,9 @@ pub fn get_settings(state: State<AppState>) -> Result<AppSettings, String> {
     })
 }
 
-/// Persists a single setting key/value pair.
 #[tauri::command]
 pub fn save_setting(key: String, value: String, state: State<AppState>) -> Result<(), String> {
-    // Whitelist allowed keys — never allow arbitrary key injection
+    // Whitelist allowed keys
     let allowed_keys = ["auto_lock_minutes", "clipboard_clear_seconds", "has_seen_tour"];
     if !allowed_keys.contains(&key.as_str()) {
         return Err(format!("Unknown setting key: {}", key));
@@ -327,8 +315,6 @@ pub fn save_setting(key: String, value: String, state: State<AppState>) -> Resul
     .map_err(|e| e.to_string())?;
     Ok(())
 }
-
-// BACKUP SYSTEM
 
 #[tauri::command]
 pub fn export_vault(destination: String, app: tauri::AppHandle) -> Result<(), String> {
@@ -377,7 +363,6 @@ pub fn import_vault(
     }
     drop(source_conn);
 
-    // Acquire both locks — prevent any concurrent reads/writes
     let mut conn_guard = state.db.lock().map_err(|e| e.to_string())?;
     let mut key_guard = state.active_key.lock().map_err(|e| e.to_string())?;
 
@@ -547,7 +532,6 @@ pub fn change_master_password(
 
 #[tauri::command]
 pub async fn fetch_domain_icon(url: String) -> Result<String, String> {
-    // Extract domain cleanly
     let domain = url.replace("https://", "").replace("http://", "");
     let domain = domain.split('/').next().unwrap_or("").trim().to_string();
     if domain.is_empty() {
@@ -560,7 +544,6 @@ pub async fn fetch_domain_icon(url: String) -> Result<String, String> {
         .build()
         .map_err(|e| e.to_string())?;
 
-    // Try Clearbit logo API first (high quality)
     let clearbit_url = format!("https://logo.clearbit.com/{}", domain);
     if let Ok(response) = client.get(&clearbit_url).send().await {
         if response.status().is_success() {
@@ -575,7 +558,6 @@ pub async fn fetch_domain_icon(url: String) -> Result<String, String> {
         }
     }
 
-    // Fallback: direct favicon.ico from the domain
     let favicon_url = format!("https://{}/favicon.ico", domain);
     if let Ok(response) = client.get(&favicon_url).send().await {
         if response.status().is_success() {
@@ -602,7 +584,6 @@ pub async fn fetch_domain_icon(url: String) -> Result<String, String> {
         }
     }
 
-    // Last resort: Google's favicon service (fast, reliable)
     let google_url = format!("https://www.google.com/s2/favicons?domain={}&sz=64", domain);
     let response = client
         .get(&google_url)

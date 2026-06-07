@@ -13,23 +13,18 @@ export default function SetupWizard({ onComplete }: SetupWizardProps) {
   const { updateUserProfile, fetchStatus, saveSetting } = useVaultStore();
   const [step, setStep] = useState<1 | 2 | 3>(1);
   
-  // Profile state
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
   
-  // Auth state
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  // Security settings
   const [autoLock, setAutoLock] = useState(5);
   const [clipboardClear, setClipboardClear] = useState(30);
   
-  // UI state
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
-  // Image handling
   const [cropSrc, setCropSrc] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -41,7 +36,7 @@ export default function SetupWizard({ onComplete }: SetupWizardProps) {
         setCropSrc(reader.result?.toString() || null);
       };
       reader.readAsDataURL(file);
-      e.target.value = ''; // reset
+      e.target.value = '';
     }
   };
 
@@ -71,16 +66,13 @@ export default function SetupWizard({ onComplete }: SetupWizardProps) {
     setError('');
     setIsLoading(true);
     try {
-      // 1. Initialize vault
       await invoke('init_vault', { password });
       
-      // 2. Save profile
       await updateUserProfile({
         name: name.trim() || 'CN Vault User',
         avatar,
       });
 
-      // 3. Save security settings
       await saveSetting('auto_lock_minutes', String(autoLock));
       await saveSetting('clipboard_clear_seconds', String(clipboardClear));
       

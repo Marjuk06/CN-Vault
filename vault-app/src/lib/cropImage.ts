@@ -20,7 +20,6 @@ export default async function getCroppedImg(
     return ''
   }
 
-  // set canvas size to match the bounding box
   canvas.width = image.width
   canvas.height = image.height
 
@@ -37,11 +36,9 @@ export default async function getCroppedImg(
     return ''
   }
 
-  // Set the size of the cropped canvas
   croppedCanvas.width = pixelCrop.width
   croppedCanvas.height = pixelCrop.height
 
-  // Draw the cropped image onto the new canvas
   croppedCtx.drawImage(
     canvas,
     pixelCrop.x,
@@ -54,8 +51,6 @@ export default async function getCroppedImg(
     pixelCrop.height
   )
 
-  // As a base64 string
-  // Downscale slightly if it's too large to save space
   const finalCanvas = document.createElement('canvas')
   const finalCtx = finalCanvas.getContext('2d')
   if (!finalCtx) return ''

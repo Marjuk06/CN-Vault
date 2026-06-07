@@ -4,14 +4,12 @@ import { invoke } from '@tauri-apps/api/core';
 import { Loader2 } from 'lucide-react';
 import logoUrl from '@/assets/logoo.png';
 
-// Layout
 import Layout from '@/components/layout/Layout';
 import Sidebar from '@/components/layout/Sidebar';
 import BottomNav from '@/components/layout/BottomNav';
 import VaultList from '@/components/layout/VaultList';
 import EntryDetail from '@/components/layout/EntryDetail';
 
-// Modals & overlays
 import AppTour from '@/components/ui/AppTour';
 import EntryModal from '@/features/entries/EntryModal';
 import DeleteConfirmDialog from '@/features/entries/DeleteConfirmDialog';
@@ -26,8 +24,6 @@ import { cn } from '@/lib/utils';
 
 import type { VaultEntry } from '@/lib/schema';
 
-// Modal state
-
 type ModalState =
   | { type: 'none' }
   | { type: 'add' }
@@ -35,8 +31,6 @@ type ModalState =
   | { type: 'delete'; entry: VaultEntry }
   | { type: 'settings' }
   | { type: 'generator' };
-
-// App
 
 function App() {
   const { status, fetchStatus, fetchEntries, fetchSettings, fetchUserProfile, deleteEntry, getSelectedEntry } =
@@ -48,10 +42,8 @@ function App() {
   const [modal, setModal] = useState<ModalState>({ type: 'none' });
   const [shake, setShake] = useState(false);
 
-  // Auto Lock Hook
   useAutoLock();
 
-  // Initialisation
   useEffect(() => {
     const init = async () => {
       await fetchStatus();
@@ -68,7 +60,6 @@ function App() {
     }
   }, [status, fetchEntries, fetchSettings, fetchUserProfile]);
 
-  // Auth flow
   const handleAuth = async () => {
     if (!password.trim()) return;
     setError('');
@@ -87,7 +78,6 @@ function App() {
     }
   };
 
-  // Modal helpers
   const openEdit = () => {
     const entry = getSelectedEntry();
     if (entry) setModal({ type: 'edit', entry });
@@ -104,7 +94,6 @@ function App() {
     setModal({ type: 'none' });
   };
 
-  // Loading splash
   if (isLoading) {
     return (
       <div className="h-screen w-screen flex items-center justify-center bg-[#060609]">
@@ -113,11 +102,9 @@ function App() {
     );
   }
 
-  // Unlock / Init screen
   if (status === 'uninitialized') {
     return (
       <div className="h-screen w-screen overflow-hidden bg-[#060609] text-slate-200 font-sans flex items-center justify-center relative">
-        {/* Ambient glows */}
         <div className="glow-blob w-[600px] h-[600px] bg-violet-600/15 top-[-150px] left-[-150px]" />
         <div className="glow-blob w-[500px] h-[500px] bg-blue-500/10 bottom-[-100px] right-[-100px]" />
         <SetupWizard onComplete={fetchStatus} />
@@ -128,12 +115,10 @@ function App() {
   if (status === 'locked') {
     return (
       <div className="h-screen w-screen overflow-hidden bg-[#060609] text-slate-200 font-sans flex items-center justify-center relative">
-        {/* Ambient glows */}
         <div className="glow-blob w-[600px] h-[600px] bg-violet-600/15 top-[-150px] left-[-150px]" />
         <div className="glow-blob w-[500px] h-[500px] bg-blue-500/10 bottom-[-100px] right-[-100px]" />
 
         <div className={cn("glass-bright rounded-3xl p-10 w-full max-w-sm relative z-10 anim-scale-in shadow-[0_32px_80px_rgba(0,0,0,0.7),0_0_60px_rgba(124,58,237,0.12)]", shake && "anim-shake")}>
-          {/* Icon + Title */}
           <div className="flex flex-col items-center mb-8">
             <div className="w-20 h-20 rounded-2xl bg-[#120D26] border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex items-center justify-center mb-3 overflow-hidden backdrop-blur-md">
               <img src={logoUrl} alt="CN Vault Logo" className="w-full h-full object-contain scale-[1.0] transition-transform" />
@@ -146,7 +131,6 @@ function App() {
             </p>
           </div>
 
-          {/* Password field */}
           <div className="mb-3">
             <input
               type="password"
@@ -175,10 +159,8 @@ function App() {
     );
   }
 
-  // Main application
   return (
     <ErrorBoundary>
-      {/* App Tour */}
       <AppTour />
 
       <Layout>
@@ -194,7 +176,6 @@ function App() {
         <EntryDetail onEdit={openEdit} onDelete={openDelete} />
       </Layout>
 
-      {/* Add / Edit modal */}
       {(modal.type === 'add' || modal.type === 'edit') && (
         <EntryModal
           entry={modal.type === 'edit' ? modal.entry : null}
@@ -202,7 +183,6 @@ function App() {
         />
       )}
 
-      {/* Delete confirmation */}
       {modal.type === 'delete' && (
         <DeleteConfirmDialog
           entryTitle={modal.entry.title}
@@ -211,17 +191,14 @@ function App() {
         />
       )}
 
-      {/* Settings panel */}
       {modal.type === 'settings' && (
         <SettingsPanel onClose={() => setModal({ type: 'none' })} />
       )}
 
-      {/* Generator panel */}
       {modal.type === 'generator' && (
         <PasswordGenerator onClose={() => setModal({ type: 'none' })} />
       )}
 
-      {/* Toast notifications */}
       <ToastContainer />
     </ErrorBoundary>
   );

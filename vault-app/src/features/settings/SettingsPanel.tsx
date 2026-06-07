@@ -15,26 +15,22 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
 
   const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'backup'>('profile');
   
-  // Profile State
   const [profileName, setProfileName] = useState(userProfile?.name || '');
   const [profileAvatar, setProfileAvatar] = useState(userProfile?.avatar || '');
   const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [cropSrc, setCropSrc] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
-  // Security State
   const [autoLock, setAutoLock] = useState(settings.autoLockMinutes);
   const [clipboardClear, setClipboardClear] = useState(settings.clipboardClearSeconds);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Password Change State
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPwd, setShowPwd] = useState(false);
   const [isChangingPwd, setIsChangingPwd] = useState(false);
 
-  // Close on Escape
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handler);

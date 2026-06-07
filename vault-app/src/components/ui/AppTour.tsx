@@ -5,39 +5,26 @@ import { X, ArrowRight, ArrowLeft, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const steps: Step[] = [
-  // 0 -> Main view
   { target: '#tour-add-btn', content: 'Click here to securely store your first password or note.' },
-  // 1-5 -> Entry Modal
   { target: '#tour-tab-logins', content: 'Logins: Store your web passwords with auto-generated secure passwords.' },
   { target: '#tour-tab-email', content: 'Email: Keep track of your email accounts and IMAP/SMTP server settings.' },
   { target: '#tour-tab-api-keys', content: 'API Keys: Securely save developer tokens and secrets.' },
   { target: '#tour-tab-recovery', content: 'Recovery: Store backup codes and seed phrases safely offline.' },
   { target: '#tour-tab-notes', content: 'Notes: Write encrypted private notes or journal entries.' },
-  // 6-7 -> Entry Modal fields/save
   { target: '#tour-entry-fields', content: 'Fill in your credentials. The app will automatically encrypt them before saving.' },
   { target: '#tour-entry-save', content: 'Click Add Entry to securely encrypt and save it.' },
-  
-  // 8-9 -> Main View
   { target: '#tour-categories', content: 'Organize your entries into logical categories to find them quickly.' },
   { target: '#tour-search', content: 'Search for any credential or filter your vault instantly.' },
-  
-  // 10 -> Main View -> opens Generator Modal
   { target: '#tour-generator', content: 'Need a strong password? Open the Password Generator.' },
-  // 11-14 -> Generator Modal
   { target: '#tour-generator-length', content: 'Adjust the length of your password for optimal security. Longer is better.' },
   { target: '#tour-generator-options', content: 'Toggle uppercase, lowercase, numbers, and symbols to meet website requirements.' },
   { target: '#tour-generator-output', content: 'Your secure password is generated instantly. Check the entropy score to ensure it is strong.' },
   { target: '#tour-generator-close', content: 'Click to copy your new password to the clipboard and close the generator.' },
-  
-  // 15 -> Main view -> opens Settings Modal
   { target: '#tour-settings', content: 'Configure auto-lock, clipboard clearing, and other security preferences here.' },
-  // 16-19 -> Settings Modal
   { target: '#tour-settings-tab-profile', content: 'Profile: Customize your vault name, avatar, and restart this tour anytime.' },
   { target: '#tour-settings-tab-security', content: 'Security: Set auto-lock timers, clipboard clear limits, or change your master password.' },
   { target: '#tour-settings-tab-backup', content: 'Backup & Restore: Export an encrypted copy of your vault or import an existing one.' },
   { target: '#tour-settings-close', content: 'Close the settings panel.' },
-  
-  // 20 -> Main view -> End
   { target: '#tour-lock', content: 'Click here to instantly secure your vault when stepping away.' },
 ];
 
@@ -83,7 +70,7 @@ const Tooltip = ({
             <ArrowLeft className="w-3 h-3" /> Back
           </button>
         ) : (
-          <div /> // Spacer
+          <div />
         )}
 
         <button
