@@ -14,9 +14,6 @@
 
 ---
 
-## App Demo & Installation
-
-**[Watch the Full Demo Video on YouTube!](https://youtu.be/oziHNamB4o8)**
 
 ### Linux
 The easiest way to install on any Linux distribution is via the Snap Store:
@@ -26,10 +23,10 @@ sudo snap install cn-vault
 *(Flatpak installation via Flathub is currently pending review).*
 
 ### Windows
-Download the automated `.msix` installer from the **Releases** page on GitHub.
+Download the automated `.msix` installer from the **Releases** page.
 
 ### macOS
-*⚠️ macOS is currently not supported. We plan to add support in a future update.*
+*⚠️ macOS is currently not supported. I plan to add support in a future update.*
 
 ---
 
