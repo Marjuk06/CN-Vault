@@ -216,6 +216,16 @@ npm run tauri build
 
 ---
 
+## Author
+
+**Marjuk Amin** (@Marjuk06)
+- 🌐 [Website](https://cnvault.codenestui.top/)
+- 💻 [GitHub](https://github.com/Marjuk06)
+
+*This project (CN Vault) is entirely designed, engineered, and maintained by Marjuk Amin.*
+
+---
+
 ## License
 
 MIT License. See `LICENSE` for more information.
