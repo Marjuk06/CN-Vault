@@ -23,7 +23,12 @@ sudo snap install cn-vault
 *(Flatpak installation via Flathub is currently pending review).*
 
 ### Windows
-Download the automated `.msix` installer from the **Releases** page.
+
+<a href="https://apps.microsoft.com/detail/9p888nv4qrls?referrer=appbadge&mode=full" target="_blank" rel="noopener noreferrer">
+  <img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
+
+Alternatively, download the automated `.msix` installer from the **Releases** page.
 
 ### macOS
 *⚠️ macOS is currently not supported. I plan to add support in a future update.*
