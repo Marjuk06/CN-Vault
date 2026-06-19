@@ -81,8 +81,15 @@ Alternatively, download the automated `.msix` installer from the **Releases** pa
 **1. Design**  
 A modern interface with a premium dark theme, indigo depths, cyan highlights, and a violet glow. 
 
-**2. Local-First**  
-CN Vault never sends your vault to the internet. Everything lives in an encrypted SQLite file on your device.
+**2. Local-First**
+
+CN Vault stores all passwords, notes, and settings locally in an encrypted SQLite database on your device.
+
+The application does **not** sync your vault, upload your data, collect analytics, or communicate with cloud servers.
+
+The only optional network request is when fetching public website favicons (for example Gmail, GitHub, or Facebook icons) to improve the visual appearance of entries. These requests never include your passwords, vault contents, or encryption keys.
+
+If no internet connection is available, CN Vault continues to function normally. Only favicon downloads are unavailable.
 
 **3. Security**  
 We assume the host machine could be compromised. Defense-in-depth measures include database encryption, memory zeroization, clipboard wiping, and strict import verification. No telemetry, no analytics.
