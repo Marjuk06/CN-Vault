@@ -12,7 +12,7 @@
 
 ---
 
-### Linux
+## Linux
 
 The easiest way to install on any Linux distribution is via the Snap Store:
 
@@ -20,37 +20,40 @@ The easiest way to install on any Linux distribution is via the Snap Store:
 sudo snap install cn-vault
 ```
 
-*(Flatpak installation via Flathub is currently pending review).*
+_(Flatpak installation via Flathub is currently pending review)._
 
-### Windows
+## Windows
 
-<a href="https://apps.microsoft.com/detail/9p888nv4qrls?referrer=appbadge&mode=full" target="_blank" rel="noopener noreferrer">
-  <img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
-</a>
+[![Get it from Microsoft](https://get.microsoft.com/images/en-us%20dark.svg)](https://apps.microsoft.com/detail/9p888nv4qrls?referrer=appbadge&mode=full)
 
-Alternatively, download the automated `.msix` installer from the **Releases** page.
+Alternatively, download the automated `.msix` installer from the **Releases**
+page.
 
-### macOS
+## macOS
 
-*⚠️ macOS is currently not supported. I plan to add support in a future update.*
+_⚠️ macOS is currently not supported. I plan to add support in a future update._
 
 ---
 
 ## Screenshots
 
-| Unlock Screen | Dashboard |
-| :---: | :---: |
-| <img src="vault-app/src/sss/locscreen.png" width="400" /> | <img src="vault-app/src/sss/dashboard.png" width="400" /> |
+<!-- markdownlint-disable MD013 -->
 
-| Add New Entry | Password Generator |
-| :---: | :---: |
-| <img src="vault-app/src/sss/newentry.png" width="400" /> | <img src="vault-app/src/sss/passgenertor.png" width="400" /> |
+|                   Unlock Screen                   |                   Dashboard                   |
+| :-----------------------------------------------: | :-------------------------------------------: |
+| ![Unlock Screen](vault-app/src/sss/locscreen.png) | ![Dashboard](vault-app/src/sss/dashboard.png) |
 
-| Settings (Profile) | Settings (Security) |
-| :---: | :---: |
-| <img src="vault-app/src/sss/settings_profile.png" width="400" /> | <img src="vault-app/src/sss/settings_security.png" width="400" /> |
+|                  Add New Entry                   |                    Password Generator                     |
+| :----------------------------------------------: | :-------------------------------------------------------: |
+| ![Add New Entry](vault-app/src/sss/newentry.png) | ![Password Generator](vault-app/src/sss/passgenertor.png) |
 
-**Settings (Backup & Restore)**
+|                     Settings (Profile)                      |                      Settings (Security)                      |
+| :---------------------------------------------------------: | :-----------------------------------------------------------: |
+| ![Settings Profile](vault-app/src/sss/settings_profile.png) | ![Settings Security](vault-app/src/sss/settings_security.png) |
+
+<!-- markdownlint-enable MD013 -->
+
+### Settings (Backup & Restore)
 
 ![Settings (Backup & Restore)](vault-app/src/sss/settings_backup.png)
 
@@ -60,42 +63,57 @@ Alternatively, download the automated `.msix` installer from the **Releases** pa
 
 ### Security
 
-* **AES-256-GCM Encryption**: Authenticated encryption for all vault entries.
-* **Argon2id (v0x13)**: Hardened key derivation to prevent GPU brute-forcing.
-* **Memory Zeroization**: Passwords and derived keys are wiped from RAM immediately after use.
-* **Auto-Lock & Anti-Brute Force**: Inactivity timers and exponential backoff for unlock attempts.
+- **AES-256-GCM Encryption**: Authenticated encryption for all vault entries.
+- **Argon2id (v0x13)**: Hardened key derivation to prevent GPU brute-forcing.
+- **Memory Zeroization**: Passwords and derived keys are wiped from RAM
+  immediately after use.
+- **Auto-Lock & Anti-Brute Force**: Inactivity timers and exponential backoff
+  for unlock attempts.
 
 ### Core Functionality
 
-* **Categories**: Logins, Email, API Keys, Recovery Codes, and Secure Notes.
-* **Password Generator**: Entropy-scoring generator for secure passwords.
-* **Auto-Clearing Clipboard**: Passwords copied to the clipboard are automatically cleared after a delay.
-* **Instant Search**: Full-text search across credentials and notes.
+- **Categories**: Logins, Email, API Keys, Recovery Codes, and Secure Notes.
+- **Password Generator**: Entropy-scoring generator for secure passwords.
+- **Auto-Clearing Clipboard**: Passwords copied to the clipboard are
+  automatically cleared after a delay.
+- **Instant Search**: Full-text search across credentials and notes.
 
 ### Backup System
 
-* **Encrypted Export**: Export your entire vault securely.
-* **Integrity Checks**: SQLite `PRAGMA integrity_check` prevents importing corrupted backup files.
+- **Encrypted Export**: Export your entire vault securely.
+- **Integrity Checks**: SQLite `PRAGMA integrity_check` prevents importing
+  corrupted backup files.
 
 ---
 
 ## Why CN Vault?
 
-**1. Design**  
-A modern interface with a premium dark theme, indigo depths, cyan highlights, and a violet glow.
+### 1. Design  
 
-**2. Local-First**
+A modern interface with a premium dark theme, indigo depths, cyan highlights,
+and a violet glow.
 
-CN Vault stores all passwords, notes, and settings locally in an encrypted SQLite database on your device.
+### 2. Local-First
 
-The application does **not** sync your vault, upload your data, collect analytics, or communicate with cloud servers.
+CN Vault stores all passwords, notes, and settings locally in an encrypted
+SQLite database on your device.
 
-The only optional network request is when fetching public website favicons (for example Gmail, GitHub, or Facebook icons) to improve the visual appearance of entries. These requests never include your passwords, vault contents, or encryption keys.
+The application does **not** sync your vault, upload your data, collect
+analytics, or communicate with cloud servers.
 
-If no internet connection is available, CN Vault continues to function normally. Only favicon downloads are unavailable.
+The only optional network request is when fetching public website favicons (for
+example Gmail, GitHub, or Facebook icons) to improve the visual appearance of
+entries. These requests never include your passwords, vault contents, or
+encryption keys.
 
-**3. Security**  
-We assume the host machine could be compromised. Defense-in-depth measures include database encryption, memory zeroization, clipboard wiping, and strict import verification. No telemetry, no analytics.
+If no internet connection is available, CN Vault continues to function normally.
+Only favicon downloads are unavailable.
+
+### 3. Security  
+
+We assume the host machine could be compromised. Defense-in-depth measures
+include database encryption, memory zeroization, clipboard wiping, and strict
+import verification. No telemetry, no analytics.
 
 ---
 
@@ -106,13 +124,13 @@ graph TD
     User --> UI[React UI Layer]
     UI --> App[State Management - Zustand]
     App --> Tauri[Tauri Backend - Rust]
-    
+
     subgraph SecurityLayer [Security Layer]
         Tauri --> Key[Argon2id Key Derivation]
         Tauri --> Enc[AES-256-GCM]
         Tauri --> RAM[Memory Protection]
     end
-    
+
     SecurityLayer --> DB[(SQLite Database)]
 ```
 
@@ -120,13 +138,17 @@ graph TD
 
 ## Tech Stack
 
-| Technology | Purpose |
-| :--- | :--- |
-| **Rust** | Core backend and cryptography for memory safety and performance. |
-| **Tauri** | Application framework for building lightweight native binaries. |
-| **React & Zustand** | Component-driven UI and lightweight state management. |
-| **SQLite** | Local, atomic, single-file database storage. |
-| **TailwindCSS** | Utility-first styling for the UI. |
+<!-- markdownlint-disable MD013 -->
+
+| Technology          | Purpose                                                          |
+| :------------------ | :--------------------------------------------------------------- |
+| **Rust**            | Core backend and cryptography for memory safety and performance. |
+| **Tauri**           | Application framework for building lightweight native binaries.  |
+| **React & Zustand** | Component-driven UI and lightweight state management.            |
+| **SQLite**          | Local, atomic, single-file database storage.                     |
+| **TailwindCSS**     | Utility-first styling for the UI.                                |
+
+<!-- markdownlint-enable MD013 -->
 
 ---
 
@@ -140,7 +162,7 @@ src-tauri/                 # Rust Backend
 │   ├── database.rs        # SQLite schemas
 │   ├── models.rs          # Rust Structs
 │   └── lib.rs             # Tauri Entrypoint
-└── tauri.conf.json        
+└── tauri.conf.json
 
 src/                       # React Frontend
 ├── components/            # Reusable UI components
@@ -161,7 +183,8 @@ src/                       # React Frontend
 2. **Salt**: A 16-byte CSPRNG salt is fetched from SQLite.
 3. **KDF**: Argon2id hashes the password and salt into a 32-byte `SecretKey`.
 4. **Zeroize**: The plaintext password string is wiped from RAM.
-5. **Encryption**: AES-256-GCM encrypts the entry payload using the `SecretKey` and a fresh 12-byte nonce.
+5. **Encryption**: AES-256-GCM encrypts the entry payload using the `SecretKey`
+   and a fresh 12-byte nonce.
 6. **Storage**: The nonce and ciphertext are saved as hex strings in SQLite.
 
 ---
@@ -213,9 +236,9 @@ npm run tauri build
 
 ## Roadmap
 
-* [x] **V1: Foundation** (SQLite, Argon2id, AES-256-GCM, React UI)
-* [ ] **V2: Quality of Life** (Browser Extension, Biometric Unlock)
-* [ ] **V3: Mobile** (Android App, Local Wi-Fi Sync)
+- [x] **V1: Foundation** (SQLite, Argon2id, AES-256-GCM, React UI)
+- [ ] **V2: Quality of Life** (Browser Extension, Biometric Unlock)
+- [ ] **V3: Mobile** (Android App, Local Wi-Fi Sync)
 
 ---
 
@@ -230,15 +253,15 @@ npm run tauri build
 ## Author
 
 **Marjuk Amin** (@Marjuk06)
-* 🌐 [Website](https://cnvault.codenestui.top/)
-* 💻 [GitHub](https://github.com/Marjuk06)
 
-*This project (CN Vault) is entirely designed, engineered, and maintained by Marjuk Amin.*
+- 🌐 [Website](https://cnvault.codenestui.top/)
+- 💻 [GitHub](https://github.com/Marjuk06)
+
+_This project (CN Vault) is entirely designed, engineered, and maintained by
+Marjuk Amin._
 
 ---
 
 ## License
 
 MIT License. See `LICENSE` for more information.
-
-# cn-vault-landing
