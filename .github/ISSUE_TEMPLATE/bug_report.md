@@ -7,8 +7,6 @@ assignees: ''
 
 ---
 
-# Bug Report
-
 ## Describe the bug
 
 A clear and concise description of what the bug is.
@@ -30,7 +28,7 @@ A clear and concise description of what you expected to happen.
 
 If applicable, add screenshots to help explain your problem.
 
-## Environment (please complete the following information):
+## Environment (please complete the following information)
 
 - OS: [e.g. Ubuntu 22.04, Windows 11]
 - Installation Method: [e.g. Snap, MSIX, built from source]
