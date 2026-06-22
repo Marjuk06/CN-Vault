@@ -1,25 +1,25 @@
-<div align="center">
-  <img src="vault-app/src/assets/logoo.png" alt="CN Vault Logo" width="128" />
-  <h1 style="color: #c084fc;">CN Vault</h1>
-  <p><strong>A local-first, secure password manager.</strong></p>
-  
-  <p>
-    <a href="https://snapcraft.io/cn-vault"><img src="https://img.shields.io/badge/Snap_Store-Available-E95420?style=flat-square&logo=snapcraft&logoColor=white" alt="Snap Store"></a>
-    <img src="https://img.shields.io/badge/Status-Production-8b5cf6?style=flat-square" alt="Status" />
-    <img src="https://img.shields.io/badge/Version-1.0.0-06b6d4?style=flat-square" alt="Version" />
-    <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-312e81?style=flat-square" alt="Platforms" />
-    <img src="https://img.shields.io/badge/License-MIT-06b6d4?style=flat-square" alt="License" />
-  </p>
-</div>
+# CN Vault
+
+![CN Vault Logo](vault-app/src/assets/logoo.png)
+
+**A local-first, secure password manager.**
+
+[![Snap Store](https://img.shields.io/badge/Snap_Store-Available-E95420?style=flat-square&logo=snapcraft&logoColor=white)](https://snapcraft.io/cn-vault)
+![Status](https://img.shields.io/badge/Status-Production-8b5cf6?style=flat-square)
+![Version](https://img.shields.io/badge/Version-1.0.0-06b6d4?style=flat-square)
+![Platforms](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-312e81?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-06b6d4?style=flat-square)
 
 ---
 
-
 ### Linux
+
 The easiest way to install on any Linux distribution is via the Snap Store:
+
 ```bash
 sudo snap install cn-vault
 ```
+
 *(Flatpak installation via Flathub is currently pending review).*
 
 ### Windows
@@ -31,6 +31,7 @@ sudo snap install cn-vault
 Alternatively, download the automated `.msix` installer from the **Releases** page.
 
 ### macOS
+
 *⚠️ macOS is currently not supported. I plan to add support in a future update.*
 
 ---
@@ -49,28 +50,30 @@ Alternatively, download the automated `.msix` installer from the **Releases** pa
 | :---: | :---: |
 | <img src="vault-app/src/sss/settings_profile.png" width="400" /> | <img src="vault-app/src/sss/settings_security.png" width="400" /> |
 
-<div align="center">
-  <b>Settings (Backup & Restore)</b><br>
-  <img src="vault-app/src/sss/settings_backup.png" width="400" />
-</div>
+**Settings (Backup & Restore)**
+
+![Settings (Backup & Restore)](vault-app/src/sss/settings_backup.png)
 
 ---
 
 ## Features
 
 ### Security
+
 * **AES-256-GCM Encryption**: Authenticated encryption for all vault entries.
 * **Argon2id (v0x13)**: Hardened key derivation to prevent GPU brute-forcing.
 * **Memory Zeroization**: Passwords and derived keys are wiped from RAM immediately after use.
 * **Auto-Lock & Anti-Brute Force**: Inactivity timers and exponential backoff for unlock attempts.
 
 ### Core Functionality
+
 * **Categories**: Logins, Email, API Keys, Recovery Codes, and Secure Notes.
 * **Password Generator**: Entropy-scoring generator for secure passwords.
 * **Auto-Clearing Clipboard**: Passwords copied to the clipboard are automatically cleared after a delay.
 * **Instant Search**: Full-text search across credentials and notes.
 
 ### Backup System
+
 * **Encrypted Export**: Export your entire vault securely.
 * **Integrity Checks**: SQLite `PRAGMA integrity_check` prevents importing corrupted backup files.
 
@@ -79,7 +82,7 @@ Alternatively, download the automated `.msix` installer from the **Releases** pa
 ## Why CN Vault?
 
 **1. Design**  
-A modern interface with a premium dark theme, indigo depths, cyan highlights, and a violet glow. 
+A modern interface with a premium dark theme, indigo depths, cyan highlights, and a violet glow.
 
 **2. Local-First**
 
@@ -153,6 +156,7 @@ src/                       # React Frontend
 ## Security Details
 
 ### Encryption Flow
+
 1. **Input**: User provides the Master Password.
 2. **Salt**: A 16-byte CSPRNG salt is fetched from SQLite.
 3. **KDF**: Argon2id hashes the password and salt into a 32-byte `SecretKey`.
@@ -209,9 +213,9 @@ npm run tauri build
 
 ## Roadmap
 
-- [x] **V1: Foundation** (SQLite, Argon2id, AES-256-GCM, React UI)
-- [ ] **V2: Quality of Life** (Browser Extension, Biometric Unlock)
-- [ ] **V3: Mobile** (Android App, Local Wi-Fi Sync)
+* [x] **V1: Foundation** (SQLite, Argon2id, AES-256-GCM, React UI)
+* [ ] **V2: Quality of Life** (Browser Extension, Biometric Unlock)
+* [ ] **V3: Mobile** (Android App, Local Wi-Fi Sync)
 
 ---
 
@@ -226,8 +230,8 @@ npm run tauri build
 ## Author
 
 **Marjuk Amin** (@Marjuk06)
-- 🌐 [Website](https://cnvault.codenestui.top/)
-- 💻 [GitHub](https://github.com/Marjuk06)
+* 🌐 [Website](https://cnvault.codenestui.top/)
+* 💻 [GitHub](https://github.com/Marjuk06)
 
 *This project (CN Vault) is entirely designed, engineered, and maintained by Marjuk Amin.*
 
@@ -236,4 +240,5 @@ npm run tauri build
 ## License
 
 MIT License. See `LICENSE` for more information.
+
 # cn-vault-landing

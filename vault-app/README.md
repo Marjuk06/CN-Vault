@@ -1,22 +1,19 @@
-<div align="center">
-  <img src="src-tauri/icons/128x128.png" alt="CN Vault Logo" width="128" />
-  <h1>CN Vault</h1>
-  <p><strong>A premium, local-first, mathematically secure password manager.</strong></p>
-  
-  <p>
-    <img src="https://img.shields.io/badge/Status-Production--Ready-success?style=for-the-badge" alt="Status" />
-    <img src="https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge" alt="Version" />
-    <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey?style=for-the-badge" alt="Platforms" />
-    <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
-  </p>
-  <p>
-    <img src="https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white" alt="Rust" />
-    <img src="https://img.shields.io/badge/Tauri-FFC131?style=flat-square&logo=Tauri&logoColor=white" alt="Tauri" />
-    <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
-    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
-    <img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite" />
-  </p>
-</div>
+# CN Vault
+
+![CN Vault Logo](src-tauri/icons/128x128.png)
+
+**A premium, local-first, mathematically secure password manager.**
+
+[![Status](https://img.shields.io/badge/Status-Production--Ready-success?style=for-the-badge)]()
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge)]()
+[![Platforms](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey?style=for-the-badge)]()
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)]()
+
+[![Rust](https://img.shields.io/badge/Rust-000000?style=flat-square&logo=rust&logoColor=white)]()
+[![Tauri](https://img.shields.io/badge/Tauri-FFC131?style=flat-square&logo=Tauri&logoColor=white)]()
+[![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)]()
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)]()
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)]()
 
 ---
 
@@ -34,16 +31,16 @@
 | :---: | :---: |
 | <img src="src/sss/settings_profile.png" width="400" /> | <img src="src/sss/settings_security.png" width="400" /> |
 
-<div align="center">
-  <b>Settings (Backup & Restore)</b><br>
-  <img src="src/sss/settings_backup.png" width="400" />
-</div>
+**Settings (Backup & Restore)**
+
+![Settings (Backup & Restore)](src/sss/settings_backup.png)
 
 ---
 
 ## ✨ Features
 
 ### Security
+
 * **Military-Grade Encryption**: AES-256-GCM authenticated encryption for all vault entries.
 * **Hardened Key Derivation**: Argon2id (v0x13) protecting against GPU/ASIC brute-forcing.
 * **Memory Zeroization**: Plaintext passwords and derived keys are mathematically wiped from RAM the millisecond they are no longer needed.
@@ -51,17 +48,20 @@
 * **Anti-Brute Force**: Exponential backoff locking out rapid unlock attempts.
 
 ### Password Management
+
 * **Smart Categories**: Sort by Logins, Email, API Keys, Recovery Codes, and Secure Notes.
 * **Password Generator**: Highly customizable, entropy-scoring generator for uncrackable passwords.
 * **Auto-Clearing Clipboard**: Passwords copied to the clipboard are destroyed after a configurable countdown.
 
 ### Vault Management & Organization
+
 * **Real-time Search**: Instantaneous full-text search across all credentials and notes.
 * **Interactive App Tour**: Built-in onboarding dynamically walks new users through every feature.
 * **Network Awareness**: Live network status indicator ensuring you know when domain icons can be fetched.
 * **Profile Customization**: Local avatars with built-in image cropping.
 
 ### Backup System
+
 * **Encrypted Export**: Export your entire `.db` securely.
 * **Integrity-Checked Import**: SQLite `PRAGMA integrity_check` validation prevents importing corrupted or malicious backup files.
 
@@ -73,7 +73,7 @@
 Password managers shouldn't look like spreadsheets from 2005. CN Vault blends the aesthetic excellence of modern SaaS with the uncompromised security of an offline bunker.
 
 **2. Local-First & Offline-First Philosophy**  
-Your passwords belong to you. Not to a cloud provider, not to a subscription service. CN Vault never sends your vault to the internet. Everything lives in a heavily encrypted SQLite file right on your hard drive. 
+Your passwords belong to you. Not to a cloud provider, not to a subscription service. CN Vault never sends your vault to the internet. Everything lives in a heavily encrypted SQLite file right on your hard drive.
 
 **3. Security Philosophy**  
 We don't trust our own code. We employ "defense-in-depth." The database is encrypted. The memory is zeroized. The clipboard is wiped. The imports are verified. There is no telemetry, no analytics, and no backdoors.
@@ -141,6 +141,7 @@ vault-app/
 ## 🛡 Security Architecture
 
 ### Key Derivation & Encryption Flow
+
 1. **Input**: User provides the Master Password.
 2. **Salt**: A 16-byte CSPRNG salt is fetched from SQLite metadata.
 3. **KDF**: Argon2id hashes the password + salt into a 32-byte `SecretKey`.
@@ -149,6 +150,7 @@ vault-app/
 6. **Storage**: The nonce and ciphertext are concatenated and saved as hex to SQLite.
 
 ### Threat Model Mitigations
+
 * **Cold Storage Attack (Stolen Laptop)**: The database is completely unreadable without the master password. Argon2id makes brute-forcing computationally infeasible.
 * **RAM Dump Attack**: `ZeroizeOnDrop` guarantees that the `SecretKey` is destroyed the moment the vault locks. The frontend never holds the plaintext master password in global state.
 * **Tampering Attack**: AES-GCM is an *authenticated* cipher. If a single bit of the database file is altered externally, decryption will fail cleanly, preventing chosen-ciphertext attacks.
@@ -176,6 +178,7 @@ erDiagram
         TEXT encrypted_blob "nonce + AES ciphertext"
     }
 ```
+
 *Note: All sensitive data (passwords, usernames, notes, URLs) resides entirely inside the `encrypted_blob` column.*
 
 ---
@@ -183,11 +186,14 @@ erDiagram
 ## 🎨 Icon & UI System
 
 ### Domain Icons
+
 When you save a login URL, CN Vault attempts to fetch the website's favicon.
+
 * **Network Status**: Icons are only fetched when the app detects an active internet connection.
 * **Offline Fallback**: If offline, the app seamlessly falls back to beautiful gradient initials.
 
 ### Responsive Design
+
 * **Desktop**: Full sidebar, multi-pane layouts.
 * **Tablet**: Collapsible sidebars, modal optimization.
 * **Phone**: (Future Android Build) Bottom-navigation architecture, touch-friendly hitboxes.
@@ -197,11 +203,13 @@ When you save a login URL, CN Vault attempts to fetch the website's favicon.
 ## 🚀 Installation & Development
 
 ### Requirements
+
 * Node.js (v18+)
 * Rust (v1.77+)
 * System dependencies for Tauri (e.g., `libwebkit2gtk-4.1-dev` on Linux)
 
 ### Setup
+
 ```bash
 # Clone the repository
 git clone https://github.com/Marjuk06/CN-Vault.git
@@ -215,10 +223,12 @@ npm run tauri dev
 ```
 
 ### Production Build
+
 ```bash
 # Build the highly optimized native binary
 npm run tauri build
 ```
+
 *The compiled binary will be located in `src-tauri/target/release/`.*
 
 ---
@@ -226,6 +236,7 @@ npm run tauri build
 ## ⚙️ Configuration
 
 Security and Application options can be configured directly inside the app via the **Settings Panel**:
+
 * **Auto-Lock Timer**: Default is 5 minutes.
 * **Clipboard Clear Timer**: Default is 30 seconds.
 * **Master Password**: Changeable at any time.
@@ -234,23 +245,24 @@ Security and Application options can be configured directly inside the app via t
 
 ## 🗺 Roadmap
 
-- [x] **V1: The Foundation**
-  - Offline-first SQLite storage
-  - Argon2id + AES-256-GCM Cryptography
-  - Full React UI with App Tour
-  - Password Generator
-- [ ] **V2: Quality of Life**
-  - Browser Extension integration (Autofill)
-  - Biometric Unlock (TouchID / Windows Hello)
-- [ ] **V3: Mobile**
-  - Native Android app using Tauri Mobile
-  - Local Wi-Fi Syncing between Desktop & Mobile
+* [x] **V1: The Foundation**
+  * Offline-first SQLite storage
+  * Argon2id + AES-256-GCM Cryptography
+  * Full React UI with App Tour
+  * Password Generator
+* [ ] **V2: Quality of Life**
+  * Browser Extension integration (Autofill)
+  * Biometric Unlock (TouchID / Windows Hello)
+* [ ] **V3: Mobile**
+  * Native Android app using Tauri Mobile
+  * Local Wi-Fi Syncing between Desktop & Mobile
 
 ---
 
 ## 🤝 Contributing
 
 We welcome contributions from the community!
+
 1. **Code Style**: We strictly adhere to `rustfmt` for Rust and `eslint`/`prettier` for TypeScript.
 2. **Pull Requests**: Ensure all tests pass (`cargo test`) before submitting.
 3. **Architecture**: Do not introduce cloud dependencies or external network calls outside of the favicon fetcher.
@@ -259,9 +271,9 @@ We welcome contributions from the community!
 
 ## 🚨 Security Policy
 
-Security is our absolute highest priority. 
+Security is our absolute highest priority.
 
-If you discover a vulnerability, **DO NOT** open a public issue. 
+If you discover a vulnerability, **DO NOT** open a public issue.
 Please report it securely via email to `security@cnvault.example.com`. We practice Responsible Disclosure and will address the issue immediately.
 
 ---
