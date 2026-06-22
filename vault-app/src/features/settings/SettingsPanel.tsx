@@ -43,8 +43,8 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
       await saveSetting('auto_lock_minutes', String(autoLock));
       await saveSetting('clipboard_clear_seconds', String(clipboardClear));
       addToast('Settings saved', 'success');
-    } catch (e: any) {
-      addToast(e.toString(), 'error');
+    } catch (e: unknown) {
+      addToast((e as Error).toString(), 'error');
     } finally {
       setIsSaving(false);
     }
@@ -58,8 +58,8 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
         avatar: profileAvatar,
       });
       addToast('Profile saved successfully', 'success');
-    } catch (e: any) {
-      addToast(e.toString(), 'error');
+    } catch (e: unknown) {
+      addToast((e as Error).toString(), 'error');
     } finally {
       setIsSavingProfile(false);
     }
@@ -89,8 +89,8 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
-    } catch (e: any) {
-      addToast(e.toString(), 'error');
+    } catch (e: unknown) {
+      addToast((e as Error).toString(), 'error');
     } finally {
       setIsChangingPwd(false);
     }
@@ -106,8 +106,8 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
         await invoke('export_vault', { destination: selected });
         addToast('CN Vault exported successfully', 'success');
       }
-    } catch (e: any) {
-      addToast(`Export failed: ${e.toString()}`, 'error');
+    } catch (e: unknown) {
+      addToast(`Export failed: ${(e as Error).toString()}`, 'error');
     }
   };
 
@@ -124,8 +124,8 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
         await fetchStatus();
         onClose();
       }
-    } catch (e: any) {
-      addToast(`Import failed: ${e.toString()}`, 'error');
+    } catch (e: unknown) {
+      addToast(`Import failed: ${(e as Error).toString()}`, 'error');
     }
   };
 

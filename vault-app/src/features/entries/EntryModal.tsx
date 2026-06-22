@@ -143,8 +143,8 @@ export default function EntryModal({ entry, onClose }: EntryModalProps) {
         await addEntry(parsed);
       }
       onClose();
-    } catch (e: any) {
-      addToast(e.toString(), 'error');
+    } catch (e: unknown) {
+      addToast((e as Error).toString(), 'error');
     } finally {
       setIsSaving(false);
     }

@@ -33,7 +33,7 @@ export default function EntryDetail({ onEdit, onDelete }: EntryDetailProps) {
   };
 
   const toggleFavorite = async () => {
-    await updateEntry({ ...entry, isFavorite: !entry.isFavorite, updatedAt: Date.now() });
+    await updateEntry({ ...entry, isFavorite: !entry.isFavorite, updatedAt: new Date().getTime() });
   };
 
   const getWebsiteUrl = () => {

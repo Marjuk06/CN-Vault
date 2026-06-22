@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useVaultStore } from '@/store/vaultStore';
 import { X, RefreshCw, Copy, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -26,7 +26,7 @@ export default function PasswordGenerator({ onClose }: PasswordGeneratorProps) {
   });
   const [password, setPassword] = useState('');
 
-  const generatePassword = () => {
+  const generatePassword = useCallback(() => {
     let charset = '';
     if (options.uppercase) charset += CHARSETS.uppercase;
     if (options.lowercase) charset += CHARSETS.lowercase;
@@ -45,11 +45,12 @@ export default function PasswordGenerator({ onClose }: PasswordGeneratorProps) {
       pwd += charset[arr[i] % charset.length];
     }
     setPassword(pwd);
-  };
+  }, [length, options]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     generatePassword();
-  }, [length, options]);
+  }, [generatePassword]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };

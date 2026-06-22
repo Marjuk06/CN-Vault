@@ -71,8 +71,8 @@ function App() {
       }
       setPassword('');
       await fetchStatus();
-    } catch (err: any) {
-      setError(typeof err === 'string' ? err : err?.message ?? 'Unknown error');
+    } catch (err: unknown) {
+      setError(typeof err === 'string' ? err : (err as Error)?.message ?? 'Unknown error');
       setShake(true);
       setTimeout(() => setShake(false), 400);
     }

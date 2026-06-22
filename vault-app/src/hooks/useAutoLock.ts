@@ -31,7 +31,7 @@ const POLL_INTERVAL_MS = 10_000;
 
 export function useAutoLock() {
   const { status, settings, lockVault } = useVaultStore();
-  const lastActivityRef = useRef<number>(Date.now());
+  const lastActivityRef = useRef<number>(new Date().getTime());
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {

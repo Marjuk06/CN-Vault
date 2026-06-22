@@ -12,9 +12,9 @@ interface ImageCropperModalProps {
 export default function ImageCropperModal({ imageSrc, onCropDone, onCancel }: ImageCropperModalProps) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<unknown | null>(null);
 
-  const onCropComplete = useCallback((_croppedArea: any, croppedAreaPixels: any) => {
+  const onCropComplete = useCallback((_croppedArea: unknown, croppedAreaPixels: unknown) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
 

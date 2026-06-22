@@ -78,8 +78,8 @@ export default function SetupWizard({ onComplete }: SetupWizardProps) {
       
       await fetchStatus();
       onComplete();
-    } catch (err: any) {
-      setError(typeof err === 'string' ? err : err?.message ?? 'Unknown error');
+    } catch (err: unknown) {
+      setError(typeof err === 'string' ? err : (err as Error)?.message ?? 'Unknown error');
     } finally {
       setIsLoading(false);
     }
