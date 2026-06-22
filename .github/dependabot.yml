@@ -1,0 +1,31 @@
+version: 2
+updates:
+  # Maintain dependencies for npm (frontend)
+  - package-ecosystem: "npm"
+    directory: "/vault-app"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
+      - "dependencies"
+
+  # Maintain dependencies for cargo (backend)
+  - package-ecosystem: "cargo"
+    directory: "/vault-app/src-tauri"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
+      - "dependencies"
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
+      - "dependencies"

@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  actionlint:
+    name: Validate GitHub Actions
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run actionlint
+        run: |
+          bash <(curl -s https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+          ./actionlint -color
+
+  markdownlint:
+    name: Validate Markdown
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v15
+        with:
+          globs: "**/*.md"
+
+  validate:
+    name: Validate Application
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Linux Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential \
+            curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev \
+            librsvg2-dev
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: vault-app/package-lock.json
+
+      - name: Install Frontend Dependencies
+        working-directory: vault-app
+        run: npm ci
+
+      - name: Lint Frontend
+        working-directory: vault-app
+        run: npm run lint
+
+      - name: Build Frontend
+        working-directory: vault-app
+        run: npm run build
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Rust Cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: vault-app/src-tauri
+
+      - name: Check Rust Formatting
+        working-directory: vault-app/src-tauri
+        run: cargo fmt -- --check
+
+      - name: Rust Clippy
+        working-directory: vault-app/src-tauri
+        run: cargo clippy -- -D warnings
+
+      - name: Cargo Check
+        working-directory: vault-app/src-tauri
+        run: cargo check
+
+      - name: Cargo Test
+        working-directory: vault-app/src-tauri
+        run: cargo test

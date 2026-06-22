@@ -1,48 +1,61 @@
-name: 'publish'
+name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
-  publish:
-    permissions:
-      contents: write
+  build-release:
+    name: Build Release (${{ matrix.os }})
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        platform: [windows-latest, ubuntu-22.04, macos-latest]
-    runs-on: ${{ matrix.platform }}
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          
-      - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable
-        
-      - name: install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04'
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Linux Dependencies
+        if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-          
-      - name: install app dependencies
-        run: npm install
-        working-directory: ./vault-app
-          
-      - name: build app
+          sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential \
+            curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev \
+            librsvg2-dev
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: vault-app/package-lock.json
+
+      - name: Install Frontend Dependencies
+        working-directory: vault-app
+        run: npm ci
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust Cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: vault-app/src-tauri
+
+      - name: Build Tauri App
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
-          projectPath: './vault-app'
-          tagName: v__VERSION__
-          releaseName: 'CN Vault v__VERSION__'
-          releaseBody: 'See the assets below to download and install this version.'
-          releaseDraft: true
-          prerelease: false
+          projectPath: vault-app
+          tagName: ${{ github.event.release.tag_name }}
