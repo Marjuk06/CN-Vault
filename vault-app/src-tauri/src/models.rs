@@ -31,6 +31,7 @@ pub struct VaultEntry {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+#[allow(dead_code)]
 pub struct DomainIcon {
     pub domain: String,
     pub file_path: String,
@@ -39,6 +40,7 @@ pub struct DomainIcon {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+#[allow(dead_code)]
 pub struct AppMetadata {
     pub key: String,
     pub value: String,

@@ -60,7 +60,6 @@ pub fn init_db(app_data_dir: PathBuf) -> Result<Connection> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::path::PathBuf;
     use tempfile::tempdir;
 
     #[test]

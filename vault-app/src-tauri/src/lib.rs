@@ -21,7 +21,15 @@ impl UnlockThrottle {
             last_failure: None,
         }
     }
+}
 
+impl Default for UnlockThrottle {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl UnlockThrottle {
     pub fn lockout_duration(&self) -> Duration {
         if self.fail_count == 0 {
             return Duration::ZERO;
