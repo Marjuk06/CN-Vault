@@ -59,7 +59,7 @@ pub fn init_vault(mut password: String, state: State<AppState>) -> Result<(), St
 
     let salt = crypto::generate_salt();
     let key = crypto::derive_key(&password, &salt).map_err(|e| e.to_string())?;
-    
+
     // Zeroize the plaintext password immediately after key derivation
     password.zeroize();
 
@@ -141,7 +141,7 @@ pub fn unlock_vault(mut password: String, state: State<AppState>) -> Result<(), 
 
     let key = crypto::derive_key(&password, &salt_arr).map_err(|e| e.to_string())?;
     password.zeroize();
-    
+
     // AES-GCM auth tag fails → wrong password
     let result = crypto::decrypt_payload(&encrypted_verifier, &key, &nonce_arr);
 
@@ -302,7 +302,11 @@ pub fn get_settings(state: State<AppState>) -> Result<AppSettings, String> {
 #[tauri::command]
 pub fn save_setting(key: String, value: String, state: State<AppState>) -> Result<(), String> {
     // Whitelist allowed keys
-    let allowed_keys = ["auto_lock_minutes", "clipboard_clear_seconds", "has_seen_tour"];
+    let allowed_keys = [
+        "auto_lock_minutes",
+        "clipboard_clear_seconds",
+        "has_seen_tour",
+    ];
     if !allowed_keys.contains(&key.as_str()) {
         return Err(format!("Unknown setting key: {}", key));
     }
@@ -348,11 +352,8 @@ pub fn import_vault(
         |r| r.get(0),
     );
 
-    let integrity_check: Result<String, _> = source_conn.query_row(
-        "PRAGMA integrity_check",
-        [],
-        |r| r.get(0),
-    );
+    let integrity_check: Result<String, _> =
+        source_conn.query_row("PRAGMA integrity_check", [], |r| r.get(0));
 
     if integrity_check.unwrap_or_else(|_| "failed".to_string()) != "ok" {
         return Err("The imported file is corrupted or not a valid SQLite database.".to_string());
@@ -446,7 +447,7 @@ pub fn change_master_password(
     let old_key =
         crypto::derive_key(&current_password, &old_salt_arr).map_err(|e| e.to_string())?;
     current_password.zeroize();
-    
+
     crypto::decrypt_payload(&encrypted_verifier, &old_key, &old_nonce_arr)
         .map_err(|_| "Invalid current password")?;
 
